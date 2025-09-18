@@ -1,7 +1,12 @@
-// ===== CONFIG you edit =====
+// ========= CONFIG =========
 const CONFIG = {
+  // Keep CSV in the same repo root to avoid CORS.
   csvUrl: "meetings.csv",
+
+  // Default time if CSV only has dates.
   defaultStart: { hour: 12, minute: 30, durationMins: 45 },
+
+  // Content
   topics: {
     current: { text: "TBD", href: "#" },
     previous: [{ text: "—", href: "#" }],
@@ -11,6 +16,7 @@ const CONFIG = {
       { text: "Rules of Procedure Quick Guide", href: "#" },
     ],
   },
+
   board: {
     president: { name: "Maya Dobre", email: "mailto:1041332@lwsd.org" },
     usg1: { name: "Reem Shadeck", email: "mailto:1095185@lwsd.org" },
@@ -18,10 +24,12 @@ const CONFIG = {
     advisor: { name: "—", email: "mailto:" },
     clubEmail: "teslastemmun@example.org",
   },
+
+  // Private local-only cancel (toggle with ?admin=SECRET)
   admin: { enabled: true, code: "changeme123" },
 };
 
-// ===== Helpers =====
+// ========= Helpers =========
 const $ = (sel) => document.querySelector(sel);
 const toISO = (d) => new Date(d).toISOString().slice(0, 10);
 const fmtDate = (d) =>
@@ -34,8 +42,8 @@ const fmtDate = (d) =>
 const fmtTime = (d) =>
   d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
 
+// Split a CSV line (supports commas in quotes)
 function splitCSVLine(line) {
-  // handles commas inside quotes
   const out = [];
   let cur = "";
   let q = false;
@@ -54,23 +62,24 @@ function splitCSVLine(line) {
   return out;
 }
 
+// Accept YYYY-MM-DD or MM/DD/YYYY
 function parseDateString(val) {
   val = (val || "").trim();
-  if (/^\d{4}-\d{2}-\d{2}$/.test(val)) return val; // ISO
+  if (/^\d{4}-\d{2}-\d{2}$/.test(val)) return val;
   if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(val)) {
     const [m, d, y] = val.split("/");
     return `${y.padStart(4, "0")}-${String(m).padStart(2, "0")}-${String(
       d
     ).padStart(2, "0")}`;
   }
-  return val;
+  return val; // fallback
 }
 
 async function loadCSV(url) {
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok)
     throw new Error(
-      `Couldn’t load ${url} (HTTP ${res.status}). Make sure meetings.csv is in the repo root and Pages is enabled.`
+      `Couldn't load ${url} (HTTP ${res.status}). Make sure meetings.csv is in the repo root and Pages is enabled.`
     );
   const text = await res.text();
   const lines = text.replace(/^\uFEFF/, "").trim().split(/\r?\n/);
@@ -125,11 +134,28 @@ function clearCancelOverride() {
   localStorage.removeItem("mun_cancel_override");
 }
 
-// ===== Render =====
+// ========= Render =========
 document.addEventListener("DOMContentLoaded", async () => {
-  // Static links/content
-  $("#interest-link").href = CONFIG.links.interest || "#";
-  $("#current-topic").innerHTML = `<a href="${CONFIG.topics.current.href}">${CONFIG.topics.current.text}</a>`;
+  // Static content
+  const B = CONFIG.board;
+  const set = (id, v) => (document.getElementById(id).textContent = v);
+  set("president-name", B.president.name);
+  $("#president-email").href = B.president.email;
+  $("#president-email").textContent = B.president.email.replace("mailto:", "");
+  set("usg1-name", B.usg1.name);
+  $("#usg1-email").href = B.usg1.email;
+  $("#usg1-email").textContent = B.usg1.email.replace("mailto:", "");
+  set("usg2-name", B.usg2.name);
+  $("#usg2-email").href = B.usg2.email;
+  $("#usg2-email").textContent = B.usg2.email.replace("mailto:", "");
+  set("advisor-name", B.advisor.name);
+  $("#advisor-email").href = B.advisor.email;
+  $("#advisor-email").textContent = B.advisor.email.replace("mailto:", "");
+  $("#club-email").href = "mailto:" + B.clubEmail;
+  $("#club-email").textContent = B.clubEmail;
+
+  const cur = CONFIG.topics.current;
+  $("#current-topic").innerHTML = `<a href="${cur.href}">${cur.text}</a>`;
   const prev = $("#previous-topics");
   prev.innerHTML = "";
   CONFIG.topics.previous.forEach((t) => {
@@ -144,26 +170,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     li.innerHTML = `<a href="${g.href}">${g.text}</a>`;
     gl.appendChild(li);
   });
-
-  const B = CONFIG.board;
-  const set = (id, v) => (document.getElementById(id).textContent = v);
-  set("president-name", B.president.name);
-  $("#president-email").href = B.president.email;
-  $("#president-email").textContent = B.president.email.replace("mailto:", "");
-  set("usg1-name", B.usg1.name);
-  $("#usg1-email").href = B.usg1.email;
-  $("#usg1-email").textContent = B.usg1.email.replace("mailto:", "");
-  set("usg2-name", B.usg2.name);
-  $("#usg2-email").href = B.usg2.email;
-  $("#usg2-email").textContent = B.usg2.email.replace("mailto:", "");
-  set("treas-name", B.treasurer.name);
-  $("#treas-email").href = B.treasurer.email;
-  $("#treas-email").textContent = B.treasurer.email.replace("mailto:", "");
-  set("advisor-name", B.advisor.name);
-  $("#advisor-email").href = B.advisor.email;
-  $("#advisor-email").textContent = B.advisor.email.replace("mailto:", "");
-  $("#club-email").href = "mailto:" + B.clubEmail;
-  $("#club-email").textContent = B.clubEmail;
 
   // Admin bubble
   if (isAdmin()) {
@@ -194,9 +200,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     refresh();
   }
 
-  // CSV fetch with a short timeout to avoid forever “loading”
+  // CSV fetch (with timeout)
   const controller = new AbortController();
-  const t = setTimeout(() => controller.abort(), 6000);
+  const t = setTimeout(() => controller.abort(), 7000);
 
   let rows = [],
     next = null,
