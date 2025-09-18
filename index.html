@@ -6,23 +6,18 @@
   <title>Tesla STEM Model UN Club</title>
   <meta name="description" content="Tesla STEM High School Model United Nations club — meetings, resources, board, and announcements." />
   <style>
-    :root{
-      --un-blue:#6CACE4; --un-navy:#0B2D5C; --bg:#f7fbff; --card:#ffffff; --line:#b7d3f3; --muted:#476a9a; --radius:14px;
-    }
+    :root{--un-blue:#6CACE4;--un-navy:#0B2D5C;--bg:#f7fbff;--card:#fff;--line:#b7d3f3;--muted:#476a9a;--radius:14px}
     *{box-sizing:border-box}
     html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--un-navy);background:var(--bg)}
     a{color:var(--un-navy)}
-    .container{max-width:980px;margin-inline:auto;padding:20px}
+    .container{max-width:980px;margin:0 auto;padding:20px}
     header{background:var(--un-blue);color:#fff;border-bottom:2px solid #fff3}
     .brand{display:flex;align-items:center;gap:12px;justify-content:center;padding:26px 18px}
-    .brand h1{margin:0;font-weight:800;font-size:clamp(22px,3.5vw,34px);letter-spacing:.2px}
-    .nav{display:flex;gap:16px;justify-content:center;padding:0 0 14px 0}
-    .nav a{color:#fff;text-decoration:none;font-weight:600;border-bottom:2px solid transparent;padding-bottom:2px}
-    .nav a:hover{border-color:#fff}
+    .brand h1{margin:0;font-weight:800;font-size:clamp(22px,3.5vw,34px)}
     .grid{display:grid;gap:16px;grid-template-columns:1fr}
     @media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
     .card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:16px}
-    .card h2{margin:0 0 8px 0;color:var(--un-navy);font-size:20px}
+    .card h2{margin:0 0 8px 0;font-size:20px}
     .sub{color:var(--muted);font-size:14px}
     .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
     .btn{display:inline-block;padding:10px 14px;border-radius:10px;font-weight:800;text-decoration:none}
@@ -31,15 +26,12 @@
     .btn:hover{filter:brightness(.95)}
     .list{margin:8px 0 0 18px;padding:0}
     .list li{margin:4px 0}
-    .kv{display:grid;grid-template-columns:160px 1fr;gap:8px;margin:6px 0}
-    .kv .k{font-weight:700}
     footer{border-top:1.5px solid var(--line);padding:16px 0;margin-top:24px;color:var(--muted);text-align:center}
-    section{margin-top:16px}
-    .pill{display:inline-block;background:#eaf3fe;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:13px;color:var(--un-navy)}
     /* Admin bubble */
-    #adminBar{display:none; position:fixed; right:16px; bottom:16px; background:#ffffff; border:1.5px solid var(--line); border-radius:12px; padding:12px; box-shadow:0 6px 30px rgba(0,0,0,.08)}
-    #adminBar h3{margin:0 0 8px 0; font-size:14px}
-    #adminBar .row{display:flex; gap:8px; align-items:center}
+    #adminBar{display:none;position:fixed;right:16px;bottom:16px;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px;box-shadow:0 6px 30px rgba(0,0,0,.08)}
+    #adminBar h3{margin:0 0 8px 0;font-size:14px}
+    #adminBar .row{display:flex;gap:8px;align-items:center}
+    .error{background:#ffe9e9;border:1px solid #ffb3b3;color:#9b1c1c;border-radius:10px;padding:10px;margin-top:8px}
   </style>
 </head>
 <body>
@@ -52,21 +44,15 @@
         </svg>
         <h1>Tesla STEM Model UN Club</h1>
       </div>
-      <nav class="nav">
-        <a href="#next">Next meeting</a>
-        <a href="#resources">Resources</a>
-        <a href="#board">Board</a>
-      </nav>
     </div>
   </header>
 
   <main class="container">
-    <div id="announcements" style="margin:6px 0 10px 0; display:none"></div>
-
     <section id="next" class="card" aria-labelledby="next-title">
       <h2 id="next-title">Next meeting</h2>
       <div id="meeting-line" style="font-size:18px;font-weight:800">Loading…</div>
       <div class="sub" id="meeting-note">—</div>
+      <div id="errorBox" class="error" style="display:none"></div>
       <div class="cta-row">
         <a id="interest-link" class="btn primary" href="#">Fill Interest Form</a>
         <a id="calendar-link" class="btn outline" href="#">Add club calendar</a>
@@ -76,11 +62,9 @@
     <section id="resources" class="grid">
       <div class="card">
         <h2>Resources</h2>
-        <div class="kv">
-          <div class="k">Current topic</div>
-          <div id="current-topic">—</div>
-        </div>
-        <div class="k" style="font-weight:700;margin-top:6px">Previous topics</div>
+        <div style="font-weight:700;margin-top:6px">Current topic</div>
+        <div id="current-topic">—</div>
+        <div style="font-weight:700;margin-top:10px">Previous topics</div>
         <ul id="previous-topics" class="list"></ul>
       </div>
       <div class="card">
@@ -93,27 +77,27 @@
       <h2>Board</h2>
       <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
         <div>
-          <div class="k">President</div>
+          <div style="font-weight:700">President</div>
           <div id="president-name">—</div>
           <a id="president-email" href="#">—</a>
         </div>
         <div>
-          <div class="k">Under-Secretary General</div>
+          <div style="font-weight:700">Under‑Secretary General</div>
           <div id="usg1-name">—</div>
           <a id="usg1-email" href="#">—</a>
         </div>
         <div>
-          <div class="k">Under-Secretary General</div>
+          <div style="font-weight:700">Under‑Secretary General</div>
           <div id="usg2-name">—</div>
           <a id="usg2-email" href="#">—</a>
         </div>
         <div>
-          <div class="k">Treasurer</div>
+          <div style="font-weight:700">Treasurer</div>
           <div id="treas-name">—</div>
           <a id="treas-email" href="#">—</a>
         </div>
         <div style="grid-column:1/-1">
-          <div class="k">Advisor</div>
+          <div style="font-weight:700">Advisor</div>
           <div id="advisor-name">—</div>
           <a id="advisor-email" href="#">—</a>
         </div>
@@ -125,7 +109,7 @@
     </footer>
   </main>
 
-  <!-- Private admin controls (only show with ?admin=YOUR_SECRET) -->
+  <!-- Admin (appears with ?admin=SECRET) -->
   <div id="adminBar">
     <h3>Admin</h3>
     <div class="row">
@@ -136,189 +120,127 @@
   </div>
 
   <script>
-    // ===== CONFIG =====
+    // ===== SIMPLE, ROBUST CONFIG =====
     const CONFIG = {
-      data: {
-        // 👉 Point this to your CSV in a public repo (raw URL).
-        // e.g., https://raw.githubusercontent.com/<user>/<repo>/main/meetings.csv
-        csvUrl: "https://raw.githubusercontent.com/1095185-LWSD/mun-canvas/refs/heads/main/MUN%20Meeting%20Schedule.csv"
-      },
-      scheduleDefaults: {
-        startHour: 12, startMinute: 30,   // used if CSV has only Date
-        durationMins: 45
-      },
-      links: {
-        interest: "#",
-        calendar: "#"
-      },
+      // Put meetings.csv in the SAME repo as index.html (root). Leave as relative path to avoid CORS headaches.
+      csvUrl: 'meetings.csv',
+      // If your CSV only has dates, we use this time and duration.
+      defaultStart: { hour:12, minute:30, durationMins:45 },
+      links: { interest:'#', calendar:'#' },
       topics: {
-        current: { text:"TBD", href:"#"},
-        previous: [ { text:"—", href:"#"} ],
-        guides: [
-          { text:"Position Paper Template (Google Doc)", href:"#"},
-          { text:"Resolution & Clauses Cheat-Sheet", href:"#"},
-          { text:"Rules of Procedure Quick Guide", href:"#"}
+        current:{ text:'TBD', href:'#' },
+        previous:[ { text:'—', href:'#' } ],
+        guides:[
+          { text:'Position Paper Template (Google Doc)', href:'#' },
+          { text:'Resolution & Clauses Cheat‑Sheet', href:'#' },
+          { text:'Rules of Procedure Quick Guide', href:'#' }
         ]
       },
-      board: {
-        president: { name:"Maya Dobre",     email:"mailto:1041332@lwsd.org" },
-        usg1:      { name:"Reem Shadeck",   email:"mailto:1095185@lwsd.org" },
-        usg2:      { name:"Anya Bammi",     email:"mailto:1083416@lwsd.org" },
-        treasurer: { name:"—",              email:"mailto:" },
-        advisor:   { name:"—",              email:"mailto:" },
-        clubEmail: "teslastemmun@example.org"
+      board:{
+        president:{ name:'Maya Dobre',   email:'mailto:1041332@lwsd.org' },
+        usg1:     { name:'Reem Shadeck', email:'mailto:1095185@lwsd.org' },
+        usg2:     { name:'Anya Bammi',   email:'mailto:1083416@lwsd.org' },
+        advisor:  { name:'—',            email:'mailto:' },
+        clubEmail:'teslastemmun@example.org'
       },
-      announcements: [ /* { text:"No meeting Oct 9 — PSAT", until:"2025-10-09" } */ ],
-      admin: {
-        enabled: true,
-        code: "changeme123" // set a secret; add ?admin=changeme123 to URL to reveal admin bar
-      }
+      admin:{ enabled:true, code:'admin' }
     };
 
-    // ===== CSV loader (supports Date in YYYY-MM-DD or MM/DD/YYYY) =====
+    // ===== UTIL =====
+    const $ = sel => document.querySelector(sel);
+    const toISO = d => new Date(d).toISOString().slice(0,10);
+    const fmtDate = d => d.toLocaleDateString([], { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+    const fmtTime = d => d.toLocaleTimeString([], { hour:'numeric', minute:'2-digit' });
+
+    // Robust CSV split (handles commas inside quotes)
+    function splitCSVLine(line){
+      const out=[]; let cur=''; let q=false; for(let i=0;i<line.length;i++){
+        const c=line[i];
+        if(c==='"'){ q=!q; continue; }
+        if(c===',' && !q){ out.push(cur.trim()); cur=''; } else { cur+=c; }
+      } out.push(cur.trim()); return out;
+    }
+
     function parseDateString(val){
-      val = (val||"").trim();
-      if (/^\d{4}-\d{2}-\d{2}$/.test(val)) return val;               // ISO
-      if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(val)) {                    // US format
-        const [m,d,y] = val.split("/");
-        return `${y.padStart(4,"0")}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
-      }
-      return val; // fallback (will likely fail later if malformed)
+      val=(val||'').trim();
+      if(/^\d{4}-\d{2}-\d{2}$/.test(val)) return val; // ISO
+      if(/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(val)){ const [m,d,y]=val.split('/'); return `${y.padStart(4,'0')}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
+      return val; // fallback
     }
 
     async function loadCSV(url){
-      const res = await fetch(url, {cache:"no-store"});
-      if(!res.ok) throw new Error("CSV fetch failed: "+res.status);
+      const res = await fetch(url, {cache:'no-store'});
+      if(!res.ok) throw new Error('CSV fetch failed: '+res.status+' — make sure meetings.csv is in the repo root and the site is published.');
       const text = await res.text();
-      const lines = text.trim().split(/\r?\n/);
-      const header = lines.shift().split(",").map(s=>s.trim().toLowerCase());
-      const idx = {
-        date: header.indexOf("date"),
-        room: header.indexOf("room"),
-        topic: header.indexOf("topic")
-      };
-      if(idx.date<0 || idx.room<0 || idx.topic<0){
-        throw new Error("CSV must have header: Date, Room, Topic");
-      }
-      const rows = lines.map(l=>l.split(",")).map(cols=>({
-        date: parseDateString(cols[idx.date]),
-        room: (cols[idx.room]||"").trim(),
-        topic: (cols[idx.topic]||"").trim()
+      const lines = text.replace(/^\uFEFF/, '').trim().split(/\r?\n/);
+      if(lines.length<2) throw new Error('CSV is empty. Add rows under the header.');
+      const header = splitCSVLine(lines.shift()).map(s=>s.toLowerCase());
+      const di = header.indexOf('date'), ri = header.indexOf('room'), ti = header.indexOf('topic');
+      if(di<0||ri<0||ti<0) throw new Error('CSV header must be exactly: Date, Room, Topic');
+      return lines.map(l=>splitCSVLine(l)).map(cols=>({
+        date: parseDateString(cols[di]),
+        room: (cols[ri]||'').trim(),
+        topic:(cols[ti]||'').trim()
       })).filter(r=>r.date);
-      return rows;
     }
 
-    // ===== Helpers =====
-    const toISO = d => new Date(d).toISOString().slice(0,10);
-    const fmtDate = d => d.toLocaleDateString([], { weekday:"short", month:"short", day:"numeric", year:"numeric" });
-    const fmtTime = d => d.toLocaleTimeString([], { hour:"numeric", minute:"2-digit" });
-
-    function computeNextFromCSV(rows){
-      const now = new Date();
-      const { startHour, startMinute, durationMins } = CONFIG.scheduleDefaults;
-      const upcoming = rows
-        .map(r=>{
-          const dt = new Date(r.date + "T00:00:00");
-          dt.setHours(startHour, startMinute, 0, 0);
-          return { dt, room: r.room || "—", topic: r.topic || "—", raw: r };
-        })
-        .filter(e => e.dt > now)
-        .sort((a,b)=> a.dt - b.dt);
-      return upcoming[0] ? { ...upcoming[0], durationMins } : null;
+    function computeNext(rows){
+      const now=new Date(); const {hour,minute,durationMins}=CONFIG.defaultStart;
+      const up = rows.map(r=>{ const dt=new Date(r.date+'T00:00:00'); dt.setHours(hour,minute,0,0); return {dt,room:r.room||'—',topic:r.topic||'—'}; })
+                      .filter(e=>e.dt>now).sort((a,b)=>a.dt-b.dt);
+      return up[0] ? {...up[0],durationMins} : null;
     }
 
-    // ===== Admin local cancel (client-only) =====
-    function isAdmin(){
-      if(!CONFIG.admin.enabled) return false;
-      const u = new URL(location.href);
-      return u.searchParams.get("admin") === CONFIG.admin.code;
-    }
-    function getCancelOverride(){
-      try{ return JSON.parse(localStorage.getItem("mun_cancel_override")||"null"); }catch{ return null }
-    }
-    function setCancelOverride(dateISO){ localStorage.setItem("mun_cancel_override", JSON.stringify({ dateISO })); }
-    function clearCancelOverride(){ localStorage.removeItem("mun_cancel_override"); }
+    function isAdmin(){ if(!CONFIG.admin.enabled) return false; const u=new URL(location.href); return u.searchParams.get('admin')===CONFIG.admin.code; }
+    function getCancelOverride(){ try{return JSON.parse(localStorage.getItem('mun_cancel_override')||'null');}catch{return null} }
+    function setCancelOverride(dateISO){ localStorage.setItem('mun_cancel_override', JSON.stringify({dateISO})); }
+    function clearCancelOverride(){ localStorage.removeItem('mun_cancel_override'); }
 
-    // ===== Render =====
-    (async function(){
-      // Links
-      document.getElementById("interest-link").href = CONFIG.links.interest||"#";
-      document.getElementById("calendar-link").href = CONFIG.links.calendar||"#";
+    (async function init(){
+      // Links/resources
+      $('#interest-link').href=CONFIG.links.interest||'#';
+      $('#calendar-link').href=CONFIG.links.calendar||'#';
+      $('#current-topic').innerHTML=`<a href="${CONFIG.topics.current.href}">${CONFIG.topics.current.text}</a>`;
+      const prev=$('#previous-topics'); prev.innerHTML=''; CONFIG.topics.previous.forEach(t=>{ const li=document.createElement('li'); li.innerHTML=`<a href="${t.href}">${t.text}</a>`; prev.appendChild(li); });
+      const gl=$('#guide-links'); gl.innerHTML=''; CONFIG.topics.guides.forEach(g=>{ const li=document.createElement('li'); li.innerHTML=`<a href="${g.href}">${g.text}</a>`; gl.appendChild(li); });
+      const B=CONFIG.board; const set=(id,txt)=>document.getElementById(id).textContent=txt;
+      set('president-name',B.president.name); $('#president-email').href=B.president.email; $('#president-email').textContent=B.president.email.replace('mailto:','');
+      set('usg1-name',B.usg1.name); $('#usg1-email').href=B.usg1.email; $('#usg1-email').textContent=B.usg1.email.replace('mailto:','');
+      set('usg2-name',B.usg2.name); $('#usg2-email').href=B.usg2.email; $('#usg2-email').textContent=B.usg2.email.replace('mailto:','');
+      set('treas-name',B.treasurer.name); $('#treas-email').href=B.treasurer.email; $('#treas-email').textContent=B.treasurer.email.replace('mailto:','');
+      set('advisor-name',B.advisor.name); $('#advisor-email').href=B.advisor.email; $('#advisor-email').textContent=B.advisor.email.replace('mailto:','');
+      $('#club-email').href='mailto:'+B.clubEmail; $('#club-email').textContent=B.clubEmail;
 
-      // Topics
-      const cur = CONFIG.topics.current;
-      document.getElementById("current-topic").innerHTML = `<a href="${cur.href}">${cur.text}</a>`;
-      const prevUL = document.getElementById("previous-topics"); prevUL.innerHTML="";
-      CONFIG.topics.previous.forEach(t=>{ const li=document.createElement("li"); li.innerHTML=`<a href="${t.href}">${t.text}</a>`; prevUL.appendChild(li); });
-      const gl = document.getElementById("guide-links"); gl.innerHTML="";
-      CONFIG.topics.guides.forEach(g=>{ const li=document.createElement("li"); li.innerHTML=`<a href="${g.href}">${g.text}</a>`; gl.appendChild(li); });
-
-      // Board + club email
-      const B=CONFIG.board, set=(id,val)=>document.getElementById(id).textContent=val;
-      set("president-name", B.president.name); document.getElementById("president-email").href=B.president.email; document.getElementById("president-email").textContent=B.president.email.replace("mailto:","");
-      set("usg1-name", B.usg1.name); document.getElementById("usg1-email").href=B.usg1.email; document.getElementById("usg1-email").textContent=B.usg1.email.replace("mailto:","");
-      set("usg2-name", B.usg2.name); document.getElementById("usg2-email").href=B.usg2.email; document.getElementById("usg2-email").textContent=B.usg2.email.replace("mailto:","");
-      set("treas-name", B.treasurer.name); document.getElementById("treas-email").href=B.treasurer.email; document.getElementById("treas-email").textContent=B.treasurer.email.replace("mailto:","");
-      set("advisor-name", B.advisor.name); document.getElementById("advisor-email").href=B.advisor.email; document.getElementById("advisor-email").textContent=B.advisor.email.replace("mailto:","");
-      document.getElementById("club-email").href='mailto:'+B.clubEmail; document.getElementById("club-email").textContent=B.clubEmail;
-
-      // Announcements
-      const ann = (CONFIG.announcements||[]).filter(a=>!a.until || new Date(a.until)>=new Date());
-      if(ann.length){ const wrap=document.getElementById("announcements"); wrap.style.display="block"; wrap.innerHTML=ann.map(a=>`<span class="pill">${a.text}</span>`).join(" "); }
-
-      // Load CSV and compute next
-      let next, rows=[], error=null;
-      try{
-        rows = await loadCSV(CONFIG.data.csvUrl);
-        next = computeNextFromCSV(rows);
-      }catch(e){ error = e; }
-
-      const line = document.getElementById("meeting-line");
-      const note = document.getElementById("meeting-note");
-
-      // Admin bar
+      // Admin UI
       if(isAdmin()){
-        const bar = document.getElementById("adminBar"); bar.style.display="block";
-        const status = document.getElementById("adminStatus");
-        const refreshStatus = ()=>{
-          const ov = getCancelOverride();
-          status.textContent = ov ? `Local override: cancel ${ov.dateISO}` : "No local cancel override";
-        };
-        document.getElementById("toggleCancel").onclick = ()=>{
-          if(next){
-            const iso = toISO(next.dt || next.date || next);
-            const ov = getCancelOverride();
-            if(ov && ov.dateISO===iso){ clearCancelOverride(); } else { setCancelOverride(iso); }
-            refreshStatus(); renderNext();
-          }
-        };
-        document.getElementById("clearCancel").onclick = ()=>{ clearCancelOverride(); refreshStatus(); renderNext(); };
-        refreshStatus();
+        const bar=document.getElementById('adminBar'); bar.style.display='block';
+        const status=document.getElementById('adminStatus');
+        const refresh=()=>{ const ov=getCancelOverride(); status.textContent=ov?`Local override: cancel ${ov.dateISO}`:'No local cancel override'; };
+        document.getElementById('toggleCancel').onclick=()=>{ if(window.__NEXT_MEETING){ const iso=toISO(window.__NEXT_MEETING.dt); const ov=getCancelOverride(); if(ov&&ov.dateISO===iso){clearCancelOverride();}else{setCancelOverride(iso);} refresh(); renderNext(); } };
+        document.getElementById('clearCancel').onclick=()=>{ clearCancelOverride(); refresh(); renderNext(); };
+        refresh();
+      }
+
+      // CSV load
+      let rows=[], next=null; try{
+        rows = await loadCSV(CONFIG.csvUrl);
+        next = computeNext(rows);
+        window.__NEXT_MEETING = next; // for admin toggle
+      }catch(e){
+        document.getElementById('errorBox').style.display='block';
+        document.getElementById('errorBox').textContent = e.message;
       }
 
       function renderNext(){
-        if(error){
-          line.textContent = "Could not load schedule CSV";
-          note.textContent = (error && error.message) ? error.message : "Check csvUrl in CONFIG.";
-          return;
-        }
-        if(!next){ line.textContent="No upcoming meetings"; note.textContent="Check back soon."; return; }
-        const dt = next.dt, room = next.room, topic = next.topic;
-        const iso = toISO(dt);
-        const localCancel = getCancelOverride();
-        const canceled = (String(topic).toUpperCase()==="CANCELLED" || (localCancel && localCancel.dateISO===iso));
-        if(canceled){
-          line.textContent = `${fmtDate(dt)} • ${fmtTime(dt)} • Room ${room} • CANCELED`;
-          note.textContent = `Topic was: ${topic}`;
-        }else{
-          line.textContent = `${fmtDate(dt)} • ${fmtTime(dt)} • Room ${room} • ${topic}`;
-          note.textContent = `Duration: ${CONFIG.scheduleDefaults.durationMins} min`;
-        }
+        const line=$('#meeting-line'), note=$('#meeting-note');
+        if(!next){ line.textContent='No upcoming meetings'; note.textContent='Check back soon.'; return; }
+        const iso=toISO(next.dt); const local=getCancelOverride(); const canceled=(String(next.topic).toUpperCase()==='CANCELLED' || (local && local.dateISO===iso));
+        if(canceled){ line.textContent=`${fmtDate(next.dt)} • ${fmtTime(next.dt)} • Room ${next.room} • CANCELED`; note.textContent=`Topic was: ${next.topic}`; }
+        else { line.textContent=`${fmtDate(next.dt)} • ${fmtTime(next.dt)} • Room ${next.room} • ${next.topic}`; note.textContent=`Duration: ${CONFIG.defaultStart.durationMins} min`; }
       }
 
       renderNext();
     })();
   </script>
 </body>
-
 </html>
