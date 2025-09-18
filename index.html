@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tesla STEM Model UN Club</title>
+  <meta name="description" content="Tesla STEM High School Model United Nations club — meetings, resources, board, and announcements." />
+  <style>
+    :root{
+      --un-blue:#6CACE4; --un-navy:#0B2D5C; --bg:#f7fbff; --card:#ffffff; --line:#b7d3f3; --muted:#476a9a; --radius:14px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--un-navy);background:var(--bg)}
+    a{color:var(--un-navy)}
+    .container{max-width:980px;margin-inline:auto;padding:20px}
+    header{background:var(--un-blue);color:#fff;border-bottom:2px solid #fff3}
+    .brand{display:flex;align-items:center;gap:12px;justify-content:center;padding:26px 18px}
+    .brand h1{margin:0;font-weight:800;font-size:clamp(22px,3.5vw,34px);letter-spacing:.2px}
+    .nav{display:flex;gap:16px;justify-content:center;padding:0 0 14px 0}
+    .nav a{color:#fff;text-decoration:none;font-weight:600;border-bottom:2px solid transparent;padding-bottom:2px}
+    .nav a:hover{border-color:#fff}
+    .grid{display:grid;gap:16px;grid-template-columns:1fr}
+    @media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
+    .card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:16px}
+    .card h2{margin:0 0 8px 0;color:var(--un-navy);font-size:20px}
+    .sub{color:var(--muted);font-size:14px}
+    .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px;font-weight:800;text-decoration:none}
+    .btn.primary{background:var(--un-navy);color:#fff}
+    .btn.outline{border:2px solid var(--un-navy);color:var(--un-navy)}
+    .btn:hover{filter:brightness(.95)}
+    .list{margin:8px 0 0 18px;padding:0}
+    .list li{margin:4px 0}
+    .kv{display:grid;grid-template-columns:160px 1fr;gap:8px;margin:6px 0}
+    .kv .k{font-weight:700}
+    footer{border-top:1.5px solid var(--line);padding:16px 0;margin-top:24px;color:var(--muted);text-align:center}
+    section{margin-top:16px}
+    .pill{display:inline-block;background:#eaf3fe;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:13px;color:var(--un-navy)}
+    /* Admin bubble */
+    #adminBar{display:none; position:fixed; right:16px; bottom:16px; background:#ffffff; border:1.5px solid var(--line); border-radius:12px; padding:12px; box-shadow:0 6px 30px rgba(0,0,0,.08)}
+    #adminBar h3{margin:0 0 8px 0; font-size:14px}
+    #adminBar .row{display:flex; gap:8px; align-items:center}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="brand">
+        <svg aria-hidden="true" width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="background:#fff;border-radius:50%">
+          <circle cx="24" cy="24" r="23" fill="#fff" stroke="var(--un-blue)" stroke-width="2"/>
+          <path d="M24 7c9.4 0 17 7.6 17 17s-7.6 17-17 17S7 33.4 7 24 14.6 7 24 7Zm0 0c6 4 13 6 13 17s-7 13-13 17C18 40 11 36 11 24S18 11 24 7Z" fill="#6CACE4" fill-opacity=".35"/>
+        </svg>
+        <h1>Tesla STEM Model UN Club</h1>
+      </div>
+      <nav class="nav">
+        <a href="#next">Next meeting</a>
+        <a href="#resources">Resources</a>
+        <a href="#board">Board</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="announcements" style="margin:6px 0 10px 0; display:none"></div>
+
+    <section id="next" class="card" aria-labelledby="next-title">
+      <h2 id="next-title">Next meeting</h2>
+      <div id="meeting-line" style="font-size:18px;font-weight:800">Loading…</div>
+      <div class="sub" id="meeting-note">—</div>
+      <div class="cta-row">
+        <a id="interest-link" class="btn primary" href="#">Fill Interest Form</a>
+        <a id="calendar-link" class="btn outline" href="#">Add club calendar</a>
+      </div>
+    </section>
+
+    <section id="resources" class="grid">
+      <div class="card">
+        <h2>Resources</h2>
+        <div class="kv">
+          <div class="k">Current topic</div>
+          <div id="current-topic">—</div>
+        </div>
+        <div class="k" style="font-weight:700;margin-top:6px">Previous topics</div>
+        <ul id="previous-topics" class="list"></ul>
+      </div>
+      <div class="card">
+        <h2>Guides & templates</h2>
+        <ul id="guide-links" class="list"></ul>
+      </div>
+    </section>
+
+    <section id="board" class="card">
+      <h2>Board</h2>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <div class="k">President</div>
+          <div id="president-name">—</div>
+          <a id="president-email" href="#">—</a>
+        </div>
+        <div>
+          <div class="k">Under-Secretary General</div>
+          <div id="usg1-name">—</div>
+          <a id="usg1-email" href="#">—</a>
+        </div>
+        <div>
+          <div class="k">Under-Secretary General</div>
+          <div id="usg2-name">—</div>
+          <a id="usg2-email" href="#">—</a>
+        </div>
+        <div>
+          <div class="k">Treasurer</div>
+          <div id="treas-name">—</div>
+          <a id="treas-email" href="#">—</a>
+        </div>
+        <div style="grid-column:1/-1">
+          <div class="k">Advisor</div>
+          <div id="advisor-name">—</div>
+          <a id="advisor-email" href="#">—</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Questions? <a id="club-email" href="#">—</a>
+    </footer>
+  </main>
+
+  <!-- Private admin controls (only show with ?admin=YOUR_SECRET) -->
+  <div id="adminBar">
+    <h3>Admin</h3>
+    <div class="row">
+      <button id="toggleCancel" class="btn outline" type="button">Toggle Cancel Next</button>
+      <button id="clearCancel" class="btn outline" type="button">Clear</button>
+    </div>
+    <div id="adminStatus" class="sub" style="margin-top:6px"></div>
+  </div>
+
+  <script>
+    // ===== CONFIG =====
+    const CONFIG = {
+      data: {
+        // 👉 Point this to your CSV in a public repo (raw URL).
+        // e.g., https://raw.githubusercontent.com/<user>/<repo>/main/meetings.csv
+        csvUrl: "https://raw.githubusercontent.com/USERNAME/REPO/main/meetings.csv"
+      },
+      scheduleDefaults: {
+        startHour: 12, startMinute: 30,   // used if CSV has only Date
+        durationMins: 45
+      },
+      links: {
+        interest: "#",
+        calendar: "#"
+      },
+      topics: {
+        current: { text:"TBD", href:"#"},
+        previous: [ { text:"—", href:"#"} ],
+        guides: [
+          { text:"Position Paper Template (Google Doc)", href:"#"},
+          { text:"Resolution & Clauses Cheat-Sheet", href:"#"},
+          { text:"Rules of Procedure Quick Guide", href:"#"}
+        ]
+      },
+      board: {
+        president: { name:"Maya Dobre",     email:"mailto:1041332@lwsd.org" },
+        usg1:      { name:"Reem Shadeck",   email:"mailto:1095185@lwsd.org" },
+        usg2:      { name:"Anya Bammi",     email:"mailto:1083416@lwsd.org" },
+        treasurer: { name:"—",              email:"mailto:" },
+        advisor:   { name:"—",              email:"mailto:" },
+        clubEmail: "teslastemmun@example.org"
+      },
+      announcements: [ /* { text:"No meeting Oct 9 — PSAT", until:"2025-10-09" } */ ],
+      admin: {
+        enabled: true,
+        code: "changeme123" // set a secret; add ?admin=changeme123 to URL to reveal admin bar
+      }
+    };
+
+    // ===== CSV loader (supports Date in YYYY-MM-DD or MM/DD/YYYY) =====
+    function parseDateString(val){
+      val = (val||"").trim();
+      if (/^\d{4}-\d{2}-\d{2}$/.test(val)) return val;               // ISO
+      if (/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(val)) {                    // US format
+        const [m,d,y] = val.split("/");
+        return `${y.padStart(4,"0")}-${String(m).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+      }
+      return val; // fallback (will likely fail later if malformed)
+    }
+
+    async function loadCSV(url){
+      const res = await fetch(url, {cache:"no-store"});
+      if(!res.ok) throw new Error("CSV fetch failed: "+res.status);
+      const text = await res.text();
+      const lines = text.trim().split(/\r?\n/);
+      const header = lines.shift().split(",").map(s=>s.trim().toLowerCase());
+      const idx = {
+        date: header.indexOf("date"),
+        room: header.indexOf("room"),
+        topic: header.indexOf("topic")
+      };
+      if(idx.date<0 || idx.room<0 || idx.topic<0){
+        throw new Error("CSV must have header: Date, Room, Topic");
+      }
+      const rows = lines.map(l=>l.split(",")).map(cols=>({
+        date: parseDateString(cols[idx.date]),
+        room: (cols[idx.room]||"").trim(),
+        topic: (cols[idx.topic]||"").trim()
+      })).filter(r=>r.date);
+      return rows;
+    }
+
+    // ===== Helpers =====
+    const toISO = d => new Date(d).toISOString().slice(0,10);
+    const fmtDate = d => d.toLocaleDateString([], { weekday:"short", month:"short", day:"numeric", year:"numeric" });
+    const fmtTime = d => d.toLocaleTimeString([], { hour:"numeric", minute:"2-digit" });
+
+    function computeNextFromCSV(rows){
+      const now = new Date();
+      const { startHour, startMinute, durationMins } = CONFIG.scheduleDefaults;
+      const upcoming = rows
+        .map(r=>{
+          const dt = new Date(r.date + "T00:00:00");
+          dt.setHours(startHour, startMinute, 0, 0);
+          return { dt, room: r.room || "—", topic: r.topic || "—", raw: r };
+        })
+        .filter(e => e.dt > now)
+        .sort((a,b)=> a.dt - b.dt);
+      return upcoming[0] ? { ...upcoming[0], durationMins } : null;
+    }
+
+    // ===== Admin local cancel (client-only) =====
+    function isAdmin(){
+      if(!CONFIG.admin.enabled) return false;
+      const u = new URL(location.href);
+      return u.searchParams.get("admin") === CONFIG.admin.code;
+    }
+    function getCancelOverride(){
+      try{ return JSON.parse(localStorage.getItem("mun_cancel_override")||"null"); }catch{ return null }
+    }
+    function setCancelOverride(dateISO){ localStorage.setItem("mun_cancel_override", JSON.stringify({ dateISO })); }
+    function clearCancelOverride(){ localStorage.removeItem("mun_cancel_override"); }
+
+    // ===== Render =====
+    (async function(){
+      // Links
+      document.getElementById("interest-link").href = CONFIG.links.interest||"#";
+      document.getElementById("calendar-link").href = CONFIG.links.calendar||"#";
+
+      // Topics
+      const cur = CONFIG.topics.current;
+      document.getElementById("current-topic").innerHTML = `<a href="${cur.href}">${cur.text}</a>`;
+      const prevUL = document.getElementById("previous-topics"); prevUL.innerHTML="";
+      CONFIG.topics.previous.forEach(t=>{ const li=document.createElement("li"); li.innerHTML=`<a href="${t.href}">${t.text}</a>`; prevUL.appendChild(li); });
+      const gl = document.getElementById("guide-links"); gl.innerHTML="";
+      CONFIG.topics.guides.forEach(g=>{ const li=document.createElement("li"); li.innerHTML=`<a href="${g.href}">${g.text}</a>`; gl.appendChild(li); });
+
+      // Board + club email
+      const B=CONFIG.board, set=(id,val)=>document.getElementById(id).textContent=val;
+      set("president-name", B.president.name); document.getElementById("president-email").href=B.president.email; document.getElementById("president-email").textContent=B.president.email.replace("mailto:","");
+      set("usg1-name", B.usg1.name); document.getElementById("usg1-email").href=B.usg1.email; document.getElementById("usg1-email").textContent=B.usg1.email.replace("mailto:","");
+      set("usg2-name", B.usg2.name); document.getElementById("usg2-email").href=B.usg2.email; document.getElementById("usg2-email").textContent=B.usg2.email.replace("mailto:","");
+      set("treas-name", B.treasurer.name); document.getElementById("treas-email").href=B.treasurer.email; document.getElementById("treas-email").textContent=B.treasurer.email.replace("mailto:","");
+      set("advisor-name", B.advisor.name); document.getElementById("advisor-email").href=B.advisor.email; document.getElementById("advisor-email").textContent=B.advisor.email.replace("mailto:","");
+      document.getElementById("club-email").href='mailto:'+B.clubEmail; document.getElementById("club-email").textContent=B.clubEmail;
+
+      // Announcements
+      const ann = (CONFIG.announcements||[]).filter(a=>!a.until || new Date(a.until)>=new Date());
+      if(ann.length){ const wrap=document.getElementById("announcements"); wrap.style.display="block"; wrap.innerHTML=ann.map(a=>`<span class="pill">${a.text}</span>`).join(" "); }
+
+      // Load CSV and compute next
+      let next, rows=[], error=null;
+      try{
+        rows = await loadCSV(CONFIG.data.csvUrl);
+        next = computeNextFromCSV(rows);
+      }catch(e){ error = e; }
+
+      const line = document.getElementById("meeting-line");
+      const note = document.getElementById("meeting-note");
+
+      // Admin bar
+      if(isAdmin()){
+        const bar = document.getElementById("adminBar"); bar.style.display="block";
+        const status = document.getElementById("adminStatus");
+        const refreshStatus = ()=>{
+          const ov = getCancelOverride();
+          status.textContent = ov ? `Local override: cancel ${ov.dateISO}` : "No local cancel override";
+        };
+        document.getElementById("toggleCancel").onclick = ()=>{
+          if(next){
+            const iso = toISO(next.dt || next.date || next);
+            const ov = getCancelOverride();
+            if(ov && ov.dateISO===iso){ clearCancelOverride(); } else { setCancelOverride(iso); }
+            refreshStatus(); renderNext();
+          }
+        };
+        document.getElementById("clearCancel").onclick = ()=>{ clearCancelOverride(); refreshStatus(); renderNext(); };
+        refreshStatus();
+      }
+
+      function renderNext(){
+        if(error){
+          line.textContent = "Could not load schedule CSV";
+          note.textContent = (error && error.message) ? error.message : "Check csvUrl in CONFIG.";
+          return;
+        }
+        if(!next){ line.textContent="No upcoming meetings"; note.textContent="Check back soon."; return; }
+        const dt = next.dt, room = next.room, topic = next.topic;
+        const iso = toISO(dt);
+        const localCancel = getCancelOverride();
+        const canceled = (String(topic).toUpperCase()==="CANCELLED" || (localCancel && localCancel.dateISO===iso));
+        if(canceled){
+          line.textContent = `${fmtDate(dt)} • ${fmtTime(dt)} • Room ${room} • CANCELED`;
+          note.textContent = `Topic was: ${topic}`;
+        }else{
+          line.textContent = `${fmtDate(dt)} • ${fmtTime(dt)} • Room ${room} • ${topic}`;
+          note.textContent = `Duration: ${CONFIG.scheduleDefaults.durationMins} min`;
+        }
+      }
+
+      renderNext();
+    })();
+  </script>
+</body>
+</html>
