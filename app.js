@@ -1,12 +1,7 @@
 // ===== CONFIG you edit =====
 const CONFIG = {
-  // Keep CSV in the SAME repo root as index.html to avoid CORS.
   csvUrl: "meetings.csv",
-
   defaultStart: { hour: 12, minute: 30, durationMins: 45 },
-
-  links: { interest: "#" },
-
   topics: {
     current: { text: "TBD", href: "#" },
     previous: [{ text: "—", href: "#" }],
@@ -16,17 +11,14 @@ const CONFIG = {
       { text: "Rules of Procedure Quick Guide", href: "#" },
     ],
   },
-
   board: {
     president: { name: "Maya Dobre", email: "mailto:1041332@lwsd.org" },
     usg1: { name: "Reem Shadeck", email: "mailto:1095185@lwsd.org" },
     usg2: { name: "Anya Bammi", email: "mailto:1083416@lwsd.org" },
-    treasurer: { name: "—", email: "mailto:" },
     advisor: { name: "—", email: "mailto:" },
     clubEmail: "teslastemmun@example.org",
   },
-
-  admin: { enabled: true, code: "changeme123" }, // open with ?admin=changeme123
+  admin: { enabled: true, code: "changeme123" },
 };
 
 // ===== Helpers =====
