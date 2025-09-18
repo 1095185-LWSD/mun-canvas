@@ -1,246 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tesla STEM Model UN Club</title>
-  <meta name="description" content="Tesla STEM High School Model United Nations club — meetings, resources, board, and announcements." />
-  <style>
-    :root{--un-blue:#6CACE4;--un-navy:#0B2D5C;--bg:#f7fbff;--card:#fff;--line:#b7d3f3;--muted:#476a9a;--radius:14px}
-    *{box-sizing:border-box}
-    html,body{margin:0;height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--un-navy);background:var(--bg)}
-    a{color:var(--un-navy)}
-    .container{max-width:980px;margin:0 auto;padding:20px}
-    header{background:var(--un-blue);color:#fff;border-bottom:2px solid #fff3}
-    .brand{display:flex;align-items:center;gap:12px;justify-content:center;padding:26px 18px}
-    .brand h1{margin:0;font-weight:800;font-size:clamp(22px,3.5vw,34px)}
-    .grid{display:grid;gap:16px;grid-template-columns:1fr}
-    @media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
-    .card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:16px}
-    .card h2{margin:0 0 8px 0;font-size:20px}
-    .sub{color:var(--muted);font-size:14px}
-    .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    .btn{display:inline-block;padding:10px 14px;border-radius:10px;font-weight:800;text-decoration:none}
-    .btn.primary{background:var(--un-navy);color:#fff}
-    .btn.outline{border:2px solid var(--un-navy);color:var(--un-navy)}
-    .btn:hover{filter:brightness(.95)}
-    .list{margin:8px 0 0 18px;padding:0}
-    .list li{margin:4px 0}
-    footer{border-top:1.5px solid var(--line);padding:16px 0;margin-top:24px;color:var(--muted);text-align:center}
-    /* Admin bubble */
-    #adminBar{display:none;position:fixed;right:16px;bottom:16px;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px;box-shadow:0 6px 30px rgba(0,0,0,.08)}
-    #adminBar h3{margin:0 0 8px 0;font-size:14px}
-    #adminBar .row{display:flex;gap:8px;align-items:center}
-    .error{background:#ffe9e9;border:1px solid #ffb3b3;color:#9b1c1c;border-radius:10px;padding:10px;margin-top:8px}
-  </style>
-</head>
-<body>
-  <header>
-    <div class="container">
-      <div class="brand">
-        <svg aria-hidden="true" width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="background:#fff;border-radius:50%">
-          <circle cx="24" cy="24" r="23" fill="#fff" stroke="var(--un-blue)" stroke-width="2"/>
-          <path d="M24 7c9.4 0 17 7.6 17 17s-7.6 17-17 17S7 33.4 7 24 14.6 7 24 7Zm0 0c6 4 13 6 13 17s-7 13-13 17C18 40 11 36 11 24S18 11 24 7Z" fill="#6CACE4" fill-opacity=".35"/>
-        </svg>
-        <h1>Tesla STEM Model UN Club</h1>
-      </div>
-    </div>
-  </header>
+:root{
+  --un-blue:#6CACE4;      /* UN light blue */
+  --un-navy:#0B2D5C;      /* deep navy */
+  --bg:#f4f8ff;
+  --card:#fff;
+  --line:#b7d3f3;
+  --muted:#476a9a;
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--un-navy);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+a{color:var(--un-navy)}
+.hidden{display:none}
 
-  <main class="container">
-    <section id="next" class="card" aria-labelledby="next-title">
-      <h2 id="next-title">Next meeting</h2>
-      <div id="meeting-line" style="font-size:18px;font-weight:800">Loading…</div>
-      <div class="sub" id="meeting-note">—</div>
-      <div id="errorBox" class="error" style="display:none"></div>
-      <div class="cta-row">
-        <a id="interest-link" class="btn primary" href="#">Fill Interest Form</a>
-        <a id="calendar-link" class="btn outline" href="#">Add club calendar</a>
-      </div>
-    </section>
+.banner{background:var(--un-blue);padding:24px 16px;border-bottom:2px solid #ffffff33}
+.brand{max-width:980px;margin:0 auto;display:flex;gap:12px;align-items:center}
+.brand h1{margin:0;color:#fff;font-weight:800;font-size:clamp(22px,3.5vw,34px)}
+.emblem{width:40px;height:40px;border-radius:50%;background:#fff;border:2px solid #cfe3fb}
 
-    <section id="resources" class="grid">
-      <div class="card">
-        <h2>Resources</h2>
-        <div style="font-weight:700;margin-top:6px">Current topic</div>
-        <div id="current-topic">—</div>
-        <div style="font-weight:700;margin-top:10px">Previous topics</div>
-        <ul id="previous-topics" class="list"></ul>
-      </div>
-      <div class="card">
-        <h2>Guides & templates</h2>
-        <ul id="guide-links" class="list"></ul>
-      </div>
-    </section>
+.container{max-width:980px;margin:0 auto;padding:20px}
+.grid{display:grid;gap:16px}
+.grid.two{grid-template-columns:1fr}
+@media(min-width:860px){.grid{grid-template-columns:1fr 1fr}.grid.two{grid-template-columns:1fr 1fr}}
+.span{grid-column:1/-1}
 
-    <section id="board" class="card">
-      <h2>Board</h2>
-      <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
-        <div>
-          <div style="font-weight:700">President</div>
-          <div id="president-name">—</div>
-          <a id="president-email" href="#">—</a>
-        </div>
-        <div>
-          <div style="font-weight:700">Under‑Secretary General</div>
-          <div id="usg1-name">—</div>
-          <a id="usg1-email" href="#">—</a>
-        </div>
-        <div>
-          <div style="font-weight:700">Under‑Secretary General</div>
-          <div id="usg2-name">—</div>
-          <a id="usg2-email" href="#">—</a>
-        </div>
-        <div>
-          <div style="font-weight:700">Treasurer</div>
-          <div id="treas-name">—</div>
-          <a id="treas-email" href="#">—</a>
-        </div>
-        <div style="grid-column:1/-1">
-          <div style="font-weight:700">Advisor</div>
-          <div id="advisor-name">—</div>
-          <a id="advisor-email" href="#">—</a>
-        </div>
-      </div>
-    </section>
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:16px}
+.card h2{margin:0 0 8px 0;font-size:20px}
+.label{font-weight:700;margin-top:6px}
+.list{margin:8px 0 0 18px;padding:0}
+.list li{margin:4px 0}
 
-    <footer>
-      Questions? <a id="club-email" href="#">—</a>
-    </footer>
-  </main>
+.headline{font-size:18px;font-weight:800;min-height:22px}
+.sub{color:var(--muted);font-size:14px;min-height:18px;margin-top:2px}
 
-  <!-- Admin (appears with ?admin=SECRET) -->
-  <div id="adminBar">
-    <h3>Admin</h3>
-    <div class="row">
-      <button id="toggleCancel" class="btn outline" type="button">Toggle Cancel Next</button>
-      <button id="clearCancel" class="btn outline" type="button">Clear</button>
-    </div>
-    <div id="adminStatus" class="sub" style="margin-top:6px"></div>
-  </div>
+.cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.btn{display:inline-block;padding:10px 14px;border-radius:10px;font-weight:800;text-decoration:none}
+.btn.primary{background:var(--un-navy);color:#fff}
+.btn.outline{border:2px solid var(--un-navy);color:var(--un-navy);background:transparent}
+.btn:hover{filter:brightness(.95)}
 
-  <script>
-    // ===== SIMPLE, ROBUST CONFIG =====
-    const CONFIG = {
-      // Put meetings.csv in the SAME repo as index.html (root). Leave as relative path to avoid CORS headaches.
-      csvUrl: 'meetings.csv',
-      // If your CSV only has dates, we use this time and duration.
-      defaultStart: { hour:12, minute:30, durationMins:45 },
-      links: { interest:'#', calendar:'#' },
-      topics: {
-        current:{ text:'TBD', href:'#' },
-        previous:[ { text:'—', href:'#' } ],
-        guides:[
-          { text:'Position Paper Template (Google Doc)', href:'#' },
-          { text:'Resolution & Clauses Cheat‑Sheet', href:'#' },
-          { text:'Rules of Procedure Quick Guide', href:'#' }
-        ]
-      },
-      board:{
-        president:{ name:'Maya Dobre',   email:'mailto:1041332@lwsd.org' },
-        usg1:     { name:'Reem Shadeck', email:'mailto:1095185@lwsd.org' },
-        usg2:     { name:'Anya Bammi',   email:'mailto:1083416@lwsd.org' },
-        advisor:  { name:'—',            email:'mailto:' },
-        clubEmail:'teslastemmun@example.org'
-      },
-      admin:{ enabled:true, code:'admin' }
-    };
+.error{background:#ffe9e9;border:1px solid #ffb3b3;color:#8a1f1f;border-radius:12px;padding:10px;margin-top:10px}
 
-    // ===== UTIL =====
-    const $ = sel => document.querySelector(sel);
-    const toISO = d => new Date(d).toISOString().slice(0,10);
-    const fmtDate = d => d.toLocaleDateString([], { weekday:'short', month:'short', day:'numeric', year:'numeric' });
-    const fmtTime = d => d.toLocaleTimeString([], { hour:'numeric', minute:'2-digit' });
+.foot{border-top:1.5px solid var(--line);padding:16px 0;margin-top:24px;color:var(--muted);text-align:center}
 
-    // Robust CSV split (handles commas inside quotes)
-    function splitCSVLine(line){
-      const out=[]; let cur=''; let q=false; for(let i=0;i<line.length;i++){
-        const c=line[i];
-        if(c==='"'){ q=!q; continue; }
-        if(c===',' && !q){ out.push(cur.trim()); cur=''; } else { cur+=c; }
-      } out.push(cur.trim()); return out;
-    }
-
-    function parseDateString(val){
-      val=(val||'').trim();
-      if(/^\d{4}-\d{2}-\d{2}$/.test(val)) return val; // ISO
-      if(/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(val)){ const [m,d,y]=val.split('/'); return `${y.padStart(4,'0')}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
-      return val; // fallback
-    }
-
-    async function loadCSV(url){
-      const res = await fetch(url, {cache:'no-store'});
-      if(!res.ok) throw new Error('CSV fetch failed: '+res.status+' — make sure meetings.csv is in the repo root and the site is published.');
-      const text = await res.text();
-      const lines = text.replace(/^\uFEFF/, '').trim().split(/\r?\n/);
-      if(lines.length<2) throw new Error('CSV is empty. Add rows under the header.');
-      const header = splitCSVLine(lines.shift()).map(s=>s.toLowerCase());
-      const di = header.indexOf('date'), ri = header.indexOf('room'), ti = header.indexOf('topic');
-      if(di<0||ri<0||ti<0) throw new Error('CSV header must be exactly: Date, Room, Topic');
-      return lines.map(l=>splitCSVLine(l)).map(cols=>({
-        date: parseDateString(cols[di]),
-        room: (cols[ri]||'').trim(),
-        topic:(cols[ti]||'').trim()
-      })).filter(r=>r.date);
-    }
-
-    function computeNext(rows){
-      const now=new Date(); const {hour,minute,durationMins}=CONFIG.defaultStart;
-      const up = rows.map(r=>{ const dt=new Date(r.date+'T00:00:00'); dt.setHours(hour,minute,0,0); return {dt,room:r.room||'—',topic:r.topic||'—'}; })
-                      .filter(e=>e.dt>now).sort((a,b)=>a.dt-b.dt);
-      return up[0] ? {...up[0],durationMins} : null;
-    }
-
-    function isAdmin(){ if(!CONFIG.admin.enabled) return false; const u=new URL(location.href); return u.searchParams.get('admin')===CONFIG.admin.code; }
-    function getCancelOverride(){ try{return JSON.parse(localStorage.getItem('mun_cancel_override')||'null');}catch{return null} }
-    function setCancelOverride(dateISO){ localStorage.setItem('mun_cancel_override', JSON.stringify({dateISO})); }
-    function clearCancelOverride(){ localStorage.removeItem('mun_cancel_override'); }
-
-    (async function init(){
-      // Links/resources
-      $('#interest-link').href=CONFIG.links.interest||'#';
-      $('#calendar-link').href=CONFIG.links.calendar||'#';
-      $('#current-topic').innerHTML=`<a href="${CONFIG.topics.current.href}">${CONFIG.topics.current.text}</a>`;
-      const prev=$('#previous-topics'); prev.innerHTML=''; CONFIG.topics.previous.forEach(t=>{ const li=document.createElement('li'); li.innerHTML=`<a href="${t.href}">${t.text}</a>`; prev.appendChild(li); });
-      const gl=$('#guide-links'); gl.innerHTML=''; CONFIG.topics.guides.forEach(g=>{ const li=document.createElement('li'); li.innerHTML=`<a href="${g.href}">${g.text}</a>`; gl.appendChild(li); });
-      const B=CONFIG.board; const set=(id,txt)=>document.getElementById(id).textContent=txt;
-      set('president-name',B.president.name); $('#president-email').href=B.president.email; $('#president-email').textContent=B.president.email.replace('mailto:','');
-      set('usg1-name',B.usg1.name); $('#usg1-email').href=B.usg1.email; $('#usg1-email').textContent=B.usg1.email.replace('mailto:','');
-      set('usg2-name',B.usg2.name); $('#usg2-email').href=B.usg2.email; $('#usg2-email').textContent=B.usg2.email.replace('mailto:','');
-      set('treas-name',B.treasurer.name); $('#treas-email').href=B.treasurer.email; $('#treas-email').textContent=B.treasurer.email.replace('mailto:','');
-      set('advisor-name',B.advisor.name); $('#advisor-email').href=B.advisor.email; $('#advisor-email').textContent=B.advisor.email.replace('mailto:','');
-      $('#club-email').href='mailto:'+B.clubEmail; $('#club-email').textContent=B.clubEmail;
-
-      // Admin UI
-      if(isAdmin()){
-        const bar=document.getElementById('adminBar'); bar.style.display='block';
-        const status=document.getElementById('adminStatus');
-        const refresh=()=>{ const ov=getCancelOverride(); status.textContent=ov?`Local override: cancel ${ov.dateISO}`:'No local cancel override'; };
-        document.getElementById('toggleCancel').onclick=()=>{ if(window.__NEXT_MEETING){ const iso=toISO(window.__NEXT_MEETING.dt); const ov=getCancelOverride(); if(ov&&ov.dateISO===iso){clearCancelOverride();}else{setCancelOverride(iso);} refresh(); renderNext(); } };
-        document.getElementById('clearCancel').onclick=()=>{ clearCancelOverride(); refresh(); renderNext(); };
-        refresh();
-      }
-
-      // CSV load
-      let rows=[], next=null; try{
-        rows = await loadCSV(CONFIG.csvUrl);
-        next = computeNext(rows);
-        window.__NEXT_MEETING = next; // for admin toggle
-      }catch(e){
-        document.getElementById('errorBox').style.display='block';
-        document.getElementById('errorBox').textContent = e.message;
-      }
-
-      function renderNext(){
-        const line=$('#meeting-line'), note=$('#meeting-note');
-        if(!next){ line.textContent='No upcoming meetings'; note.textContent='Check back soon.'; return; }
-        const iso=toISO(next.dt); const local=getCancelOverride(); const canceled=(String(next.topic).toUpperCase()==='CANCELLED' || (local && local.dateISO===iso));
-        if(canceled){ line.textContent=`${fmtDate(next.dt)} • ${fmtTime(next.dt)} • Room ${next.room} • CANCELED`; note.textContent=`Topic was: ${next.topic}`; }
-        else { line.textContent=`${fmtDate(next.dt)} • ${fmtTime(next.dt)} • Room ${next.room} • ${next.topic}`; note.textContent=`Duration: ${CONFIG.defaultStart.durationMins} min`; }
-      }
-
-      renderNext();
-    })();
-  </script>
-</body>
-</html>
+.admin{position:fixed;right:16px;bottom:16px;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px;box-shadow:0 6px 30px rgba(0,0,0,.08)}
+.admin .title{font-weight:800;margin-bottom:6px}
+.admin .row{display:flex;gap:8px;align-items:center;margin-bottom:6px}
